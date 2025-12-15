@@ -1,0 +1,14 @@
+# Node
+node_modules/
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# Docker volumes / data
+cm3010-mysql
+node_modules/
+.env
+
