@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CM3010 P05</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  {{>partials/nav}}
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h1 class="h4">Practical 5 — GlobalCart Query Optimisation</h1>
+            <p class="mb-2">Pick a role to simulate RBAC.</p>
+
+            <div class="btn-group">
+              <a class="btn btn-outline-primary" href="/?role=admin">Admin</a>
+              <a class="btn btn-outline-primary" href="/?role=manager">Manager</a>
+              <a class="btn btn-outline-primary" href="/?role=user">User</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="h5">Report: Top customers (JOIN + SUM + GROUP BY)</h2>
+            <a class="btn btn-success" href="/reports/top-customers?role={{role}}&month=2024-01-01">Run for Jan 2024</a>
+            <a class="btn btn-outline-secondary" href="/reports/top-customers?role={{role}}&month=2024-01-01&explain=1">EXPLAIN</a>
+            <a class="btn btn-outline-secondary" href="/reports/top-customers?role={{role}}&month=2024-01-01&analyze=1">EXPLAIN ANALYZE</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="h5">Materialized View (simulated)</h2>
+            <a class="btn btn-info" href="/reports/mv-top-customers?role={{role}}&month=2024-01-01">MV: Top customers Jan 2024</a>
+            <p class="small text-muted mt-2">Admin/Manager can create + refresh MV in Admin page.</p>
+          </div>
+        </div>
+      </div>
+
+      {{#isAdmin}}
+      <div class="col-12">
+        <a class="btn btn-dark" href="/admin?role={{role}}">Admin controls</a>
+      </div>
+      {{/isAdmin}}
+
+      {{#isManager}}
+      <div class="col-12">
+        <a class="btn btn-dark" href="/admin?role={{role}}">Manager controls (MV only)</a>
+      </div>
+      {{/isManager}}
+    </div>
+  </main>
+</body>
+</html>
+
